@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:TodoList.ViewModel"
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="450"
+             x:Class="TodoList.View.AddItemView"
+             x:DataType="vm:AddItemViewModel">
+  <DockPanel Margin="2">
+    <Button DockPanel.Dock="Bottom"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            Command="{Binding GoBackToItemsViewAsync}">Отмена</Button>
+    <Button DockPanel.Dock="Bottom"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            Command="{Binding CheckAndGoToItemsAsync}"
+            CommandParameter="{Binding #input.Text}">OK</Button>
+    <TextBox AcceptsReturn="True"
+             x:Name="input"
+             Text="{Binding Description}"
+             Watermark="Введите новое задание"/>
+  </DockPanel>
+</UserControl>

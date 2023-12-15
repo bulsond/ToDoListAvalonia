@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:TodoList.ViewModel"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+             x:Class="TodoList.View.ToDoListView"
+             x:DataType="vm:ToDoListViewModel">
+  <DockPanel Margin="2"
+             x:Name="panel">
+    <StackPanel DockPanel.Dock="Bottom">
+      <!--<Button HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              Command="{Binding DeleteAsync}">
+        Удалить
+      </Button>-->
+      <Button HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              Command="{Binding GoToAddItemAsync}">
+        Добавить новое
+      </Button>
+    </StackPanel>
+    <ListBox ItemsSource="{Binding ListItems}"
+             SelectedItem="{Binding SelectedItem}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Id}"
+                       Margin="4"
+                       VerticalAlignment="Center"/>
+            <CheckBox Margin="4"
+                    IsChecked="{Binding IsChecked}"
+                    Content="{Binding Description}"/>
+            <Button Margin="4">
+              <Image Source="/Assets/edit.png" MaxWidth="20" />
+            </Button>
+            <Button Margin="4"
+                    Command="{Binding $parent[ListBox].DeleteAsync}">
+              Удалить
+            </Button>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>
