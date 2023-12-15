@@ -13,3 +13,9 @@ public interface IViewModelLoadable
     // загрузка данных во въюшке
     public virtual Task LoadAsync() => Task.CompletedTask;
 }
+
+public interface IViewModelParameterized
+{
+    // передача параметра во въюшку
+    public Task SetParameterAsync(object value);
+}

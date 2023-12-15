@@ -10,7 +10,7 @@ using TodoList.View;
 
 namespace TodoList.ViewModel;
 
-public partial class ToDoListViewModel : ViewModelBase, IViewModelLoadable
+public class ToDoListViewModel : ViewModelBase, IViewModelLoadable
 {
     private readonly ToDoListService _service;
     private readonly INavigator _navigator;
@@ -23,9 +23,6 @@ public partial class ToDoListViewModel : ViewModelBase, IViewModelLoadable
 
     public ObservableCollection<ToDoItem> ListItems { get; } = new();
 
-    [ObservableProperty]
-    private ToDoItem selectedItem = null!;
-
     public async Task LoadAsync()
     {
         var items = await _service.GetItemsAsync();
@@ -33,6 +30,16 @@ public partial class ToDoListViewModel : ViewModelBase, IViewModelLoadable
         {
             ListItems.Add(item);
         }
+    }
+
+    public async Task EditAsync(object arg)
+    {
+        if (arg is null)
+        {
+            return;
+        }
+
+        await _navigator.GoToAsync(nameof(AddItemView), arg);
     }
 
     public async Task DeleteAsync(object arg)

@@ -14,7 +14,7 @@ public interface INavigator
     ServiceProvider ServiceProvider { get; set; }
 
     void RegisterRoute(string nameOfView, Type typeOfView);
-    Task GoToAsync(string nameOfView);
+    Task GoToAsync(string nameOfView, object? parameter = default);
     void GoToWaiting();
 }
 
@@ -47,7 +47,7 @@ internal class Navigator : INavigator
     }
 
     // TODO: сделать перегруженный вариант с передачей объектного параметра во въюмодель
-    public async Task GoToAsync(string nameOfView)
+    public async Task GoToAsync(string nameOfView, object? parameter = default)
     {
         if (string.IsNullOrEmpty(nameOfView))
         {
@@ -66,17 +66,29 @@ internal class Navigator : INavigator
             throw new Exception($"Данный тип: {nameof(viewType)} не зарегистрирован в ServiceProvider.");
         }
 
-        UserControl view = (UserControl)service;
+        var view = (UserControl)service;
         ViewModelBase? viewModel = (view.DataContext as ViewModelBase);
         if (viewModel is null)
         {
+            // просто въюха не имеет своей въюмодели
             AppMainWindow.ShowView(view);
             return;
         }
 
         if (viewModel is IViewModelLoadable)
         {
+            // надо подгрузить данные во въюмодель
             await (viewModel as IViewModelLoadable)!.LoadAsync();
+        }
+
+        if (viewModel is IViewModelParameterized)
+        {
+            if (parameter is null)
+            {
+                throw new ArgumentNullException(nameof(parameter));
+            }
+            // передаем аргумент во въюмодель
+            await (viewModel as IViewModelParameterized)!.SetParameterAsync(parameter);
         }
 
         AppMainWindow.ShowView(view);

@@ -32,7 +32,9 @@
             <CheckBox Margin="4"
                     IsChecked="{Binding IsChecked}"
                     Content="{Binding Description}"/>
-            <Button Margin="4">
+            <Button Margin="4"
+                    Command="{Binding $parent[ListBox].DataContext.EditAsync}"
+                    CommandParameter="{Binding #id.Text}">
               <Image Source="/Assets/edit.png" MaxWidth="20" />
             </Button>
             <Button Margin="4"

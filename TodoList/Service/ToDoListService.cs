@@ -44,4 +44,21 @@ public class ToDoListService
         _toDoItems.Remove(item);
         return true;
     }
+
+    public async Task<ToDoItem?> GetItemAsync(int id)
+    {
+        await Task.Delay(1000);
+        return _toDoItems.FirstOrDefault(item => item.Id == id);
+    }
+
+    public async Task EditItemAsync(ToDoItem item)
+    {
+        await Task.Delay(1000);
+
+        ToDoItem? origin = _toDoItems.FirstOrDefault(i => i.Id == item.Id);
+        if (origin is not null)
+        {
+            origin.Description = item.Description;
+        }
+    }
 }
