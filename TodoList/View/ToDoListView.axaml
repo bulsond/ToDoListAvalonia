@@ -26,6 +26,7 @@
         <DataTemplate>
           <StackPanel Orientation="Horizontal">
             <TextBlock Text="{Binding Id}"
+                       x:Name="id"
                        Margin="4"
                        VerticalAlignment="Center"/>
             <CheckBox Margin="4"
@@ -35,8 +36,9 @@
               <Image Source="/Assets/edit.png" MaxWidth="20" />
             </Button>
             <Button Margin="4"
-                    Command="{Binding $parent[ListBox].DeleteAsync}">
-              Удалить
+                    Command="{Binding $parent[ListBox].DataContext.DeleteAsync}"
+                    CommandParameter="{Binding #id.Text}">
+              <Image Source="/Assets/delete.png" MaxWidth="20" />
             </Button>
           </StackPanel>
         </DataTemplate>

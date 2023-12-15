@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using TodoList.DataModel;
 using TodoList.Service;
@@ -33,21 +35,20 @@ public partial class ToDoListViewModel : ViewModelBase, IViewModelLoadable
         }
     }
 
-    public async Task DeleteAsync()
+    public async Task DeleteAsync(object arg)
     {
-        
-        if (SelectedItem is null)
+        if (arg is null)
         {
             return;
         }
-        //bool result = await _service.RemoveItem(SelectedItem.Id);
-        //if (result)
-        //{
-        //    ListItems.Remove(SelectedItem);
-        //}
-        await Task.Delay(10);
-        ListItems.Remove(SelectedItem);
-
+        var id = int.Parse((string)arg);
+        // TODO: переключение на экран ожидания и обратно
+        var answer = await _service.RemoveItemAsync(id);
+        if (answer)
+        {
+            var item = ListItems.First(i => i.Id == id);
+            ListItems.Remove(item);
+        }
     }
 
     public async Task GoToAddItemAsync()

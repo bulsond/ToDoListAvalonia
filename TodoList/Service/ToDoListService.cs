@@ -32,7 +32,7 @@ public class ToDoListService
         _toDoItems.Add(item);
     }
 
-    public async Task<bool> RemoveItem(int id)
+    public async Task<bool> RemoveItemAsync(int id)
     {
         await Task.Delay(1000);
 
