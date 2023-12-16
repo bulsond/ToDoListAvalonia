@@ -8,13 +8,40 @@ using TodoList.Views;
 
 namespace TodoList.Utility;
 
+/// <summary>
+/// Навигатор перехода между страницами в приложении
+/// </summary>
 public interface INavigator
 {
+    /// <summary>
+    /// ссылка на главное окно приложения
+    /// </summary>
     IAppMainWindow AppMainWindow { get; set; }
+
+    /// <summary>
+    /// ссылка на DI контейнер
+    /// </summary>
     ServiceProvider ServiceProvider { get; set; }
 
+    /// <summary>
+    /// регистрация маршрута в навигаторе
+    /// </summary>
+    /// <param name="nameOfView">наименование въюшки (используется как ключ для поиска)</param>
+    /// <param name="typeOfView">тип въюшки (typeOf(...))</param>
     void RegisterRoute(string nameOfView, Type typeOfView);
+
+    /// <summary>
+    /// переход на нужную страницу приложения
+    /// </summary>
+    /// <param name="nameOfView">наименование въюшки (используется как ключ для поиска)</param>
+    /// <param name="parameter">опциональный параметр для передачи во въюшку,
+    /// целевая въюшка должна реализовывать IViewModelParameterized</param>
+    /// <returns></returns>
     Task GoToAsync(string nameOfView, object? parameter = default);
+
+    /// <summary>
+    /// отображение страницы ожидания подгрузки данных
+    /// </summary>
     void GoToWaiting();
 }
 
@@ -46,7 +73,6 @@ internal class Navigator : INavigator
         _routes.Add(nameOfView, typeOfView);
     }
 
-    // TODO: сделать перегруженный вариант с передачей объектного параметра во въюмодель
     public async Task GoToAsync(string nameOfView, object? parameter = default)
     {
         if (string.IsNullOrEmpty(nameOfView))
