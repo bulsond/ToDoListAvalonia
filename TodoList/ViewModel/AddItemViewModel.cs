@@ -28,6 +28,10 @@ public partial class AddItemViewModel : ViewModelBase, IViewModelParameterized
 
     public async Task SetParameterAsync(object value)
     {
+        if (value is null)
+        {
+            return;
+        }
         var id = int.Parse((string)value);
         ToDoItem? item = await _service.GetItemAsync(id);
         if (item is null)

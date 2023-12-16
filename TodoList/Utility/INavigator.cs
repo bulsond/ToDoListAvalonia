@@ -83,10 +83,6 @@ internal class Navigator : INavigator
 
         if (viewModel is IViewModelParameterized)
         {
-            if (parameter is null)
-            {
-                throw new ArgumentNullException(nameof(parameter));
-            }
             // передаем аргумент во въюмодель
             await (viewModel as IViewModelParameterized)!.SetParameterAsync(parameter);
         }
