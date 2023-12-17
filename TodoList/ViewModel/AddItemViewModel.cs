@@ -1,5 +1,4 @@
-﻿using Avalonia.Controls.Shapes;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
 using TodoList.DataModel;
 using TodoList.Service;
