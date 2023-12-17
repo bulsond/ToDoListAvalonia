@@ -17,5 +17,5 @@ public interface IViewModelLoadable
 public interface IViewModelParameterized
 {
     // передача параметра во въюшку
-    public Task SetParameterAsync(object value);
+    public Task SetParameterAsync(object? value);
 }

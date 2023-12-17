@@ -26,7 +26,7 @@ public partial class AddItemViewModel : ViewModelBase, IViewModelParameterized
     [ObservableProperty]
     private string description = string.Empty;
 
-    public async Task SetParameterAsync(object value)
+    public async Task SetParameterAsync(object? value)
     {
         if (value is null)
         {
@@ -36,6 +36,8 @@ public partial class AddItemViewModel : ViewModelBase, IViewModelParameterized
         ToDoItem? item = await _service.GetItemAsync(id);
         if (item is null)
         {
+            // TODO: здесь надо бы выбрасывать исключение,
+            // т.к. id есть, а соотв. элемента нет, что неправильно.
             return;
         }
         Description = item.Description;
