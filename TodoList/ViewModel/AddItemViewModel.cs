@@ -12,7 +12,6 @@ public partial class AddItemViewModel : ViewModelBase, IViewModelParameterized
 {
     private readonly INavigator _navigator = null!;
     private readonly ToDoListService _service = null!;
-    private bool _isEditItem = false;
     private int _itemId = 0;
 
     public AddItemViewModel() { }
@@ -42,7 +41,6 @@ public partial class AddItemViewModel : ViewModelBase, IViewModelParameterized
         }
         Description = item.Description;
         _itemId = id;
-        _isEditItem = true;
     }
 
     public async Task CheckAndGoToItemsAsync(object arg)
@@ -50,7 +48,7 @@ public partial class AddItemViewModel : ViewModelBase, IViewModelParameterized
         _navigator.GoToWaiting();
         var item = new ToDoItem { Id = _itemId, Description = Description.Trim() };
                 
-        if (_isEditItem)
+        if (item.Id > 0)
         {
             await _service.EditItemAsync(item);
         }
