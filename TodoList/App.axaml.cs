@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
@@ -55,8 +56,10 @@ public partial class App : Application
         {
             // получение ссылки на гл.окно через контейнер
             var mainWindow = ServiceProvider.GetService<MainWindow>();
+            // устанавливаем параметры гл. окна
             mainWindow!.Width = _MainWindowWidth;
             mainWindow!.Height = _MainWindowHeight;
+            mainWindow!.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             // установка гл. окна приложения
             desktop.MainWindow = mainWindow;
 
